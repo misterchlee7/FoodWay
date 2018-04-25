@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+#the_form {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 15%;
+}
+.form-group {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+}
+h1 {
+    margin-left: 35%;
+}
+
+.message {
+    color: red;
+    list-style-type: none;
+}

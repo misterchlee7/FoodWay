@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Log & Reg Home</title>
+</head>
+<body>
+	<form action="{% url 'login' %}" method="POST">
+	{% csrf_token %}
+		<h1>Login: </h1>
+			{% if messages %}
+				<ul>{% for message in messages %}
+						{% if message.extra_tags == "login" %}
+							<li class="error">{{message}}</li>
+						{%endif%}
+					{%endfor%}
+				</ul>
+			{%endif%}
+
+		<div>
+			<label for="email">Email:</label>
+			<input type="text" name="email" id="email">
+		</div>
+		<div>
+			<label for="password">Password:</label>
+			<input type="password" name="password" id="password">
+		</div>
+		<button>Login</button>
+	
+	</form>
+	<hr />
+	<form action="{% url 'register' %}" method="POST">
+		{% csrf_token %}
+		<h1>Register:</h1>
+			{% if messages %}
+				<ul>{% for message in messages %}
+						{% if message.extra_tags == "registration" %}
+							<li class="error">{{message}}</li>
+						{%endif%}
+					{%endfor%}
+				</ul>
+			{%endif%}
+		<div>
+			<label for="first_name">First Name:</label>
+			<input type="text" name="first_name">
+		</div>
+		<div>
+			<label for="last_name">Last Name:</label>
+			<input type="text" name="last_name">
+		</div>	
+		<div>
+			<label for="email">Email:</label>
+			<input type="text" name="email">
+		</div>
+		<div>
+			<label for="password">Password:</label>
+			<input type="password" name="password">
+		</div>
+		<div>
+			<label for="confirm_password">Confirm Password:</label>
+			<input type="password" name="confirm_password">
+        </div>
+        <div>
+			<label for="phone">Phone Number:</label>
+			<input type="text" name="phone">
+        </div>
+		<button>Register</button>
+	</form>
+	
+	
+</body>
+</html>

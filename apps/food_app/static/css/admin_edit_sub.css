@@ -1,0 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+#the_form {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    width: 80% !important;
+    margin-left: 50px !important;
+}
+.btn {
+    margin-right: 30px;
+}
+button {
+    margin-left: 50px;
+    margin-top: 20px;
+}

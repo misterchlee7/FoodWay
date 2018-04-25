@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin Dashboard - Orders</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'admin_dash.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand">Foodway Admin</a>
+          </div>
+          <ul class="nav navbar-nav">
+            <li><a href="/admin/dashboard">Orders</a></li>
+            <li><a href="/admin/dashboard/add_place">Restaurants</a></li>
+            <li><a href="/admin/dashboard/subscribers">Subscribers</a></li>
+            <li class="active"><a href="/">Log off</a></li>
+          </ul>
+        </div>
+      </nav>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Name</th>
+                <th>Order Time</th>
+                <th>Delivery Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for delivery in deliveries %}
+            <tr>
+                <td>{{ delivery.id }}</td>
+                <td>{{ delivery.customer.first_name }} {{ delivery.customer.last_name }}</td>
+                <td>{{ delivery.time }}</td>
+                <td>{{ delivery.address.street }}, {{ delivery.address.city }}, {{ delivery.address.state }} {{ delivery.address.zipcode }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

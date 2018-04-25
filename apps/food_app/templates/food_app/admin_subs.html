@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin Dashboard - Subscribers</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="admin_subs.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/admin_subs.css' %}">
+</head>
+    <body>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                <a class="navbar-brand">Foodway Admin</a>
+                </div>
+                <ul class="nav navbar-nav">
+                <li><a href="/admin/dashboard">Orders</a></li>
+                <li><a href="/admin/dashboard/add_place">Restaurants</a></li>
+                <li><a href="/admin/dashboard/subscribers">Subscribers</a></li>
+                <li class="active"><a href="/">Log off</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <p>Total # of Customers: {{ unique_users }}</p>
+                <p>Total Purchases: {{ count }}</p>
+                <p>Total Purchase Amount: ${{ total_earned }}.00</p>
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Subscriber ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Total Meal Tickets</th>
+                    <th>Total Spent</th>
+                    <th>edit | delete | view</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for person in obj %}
+                <tr>
+                    <td>{{ person.customer.id }}</td>
+                    <td>{{ person.customer.first_name }}</td>
+                    <td>{{ person.customer.last_name }}</td>
+                    <td>{{ person.customer.email }}</td>
+                    <td>{{ person.customer.phone }}</td>
+                    <td>{{ person.customer.meal_tickets }}</td>
+                    <td>${{ person.total }}.00 </td>
+                    <td>
+                        <a href="/admin/dashboard/subscribers/edit/{{ sub.id }}">Edit</a>
+                        <a href="/admin/dashboard/subscribers/delete/{{ sub.id }}">Delete</a>
+                        <a href="/user/{{person.customer.id}}">View</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>
+

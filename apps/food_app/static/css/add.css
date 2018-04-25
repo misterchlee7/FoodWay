@@ -1,0 +1,23 @@
+.container {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    margin-top: 4%;
+}
+.input-group-addon {
+    width: 212px;
+}
+
+.form-control {
+    width: 927px !important;
+}
+
+input[type="submit"] {
+    margin-top: 20px;
+}
+
+.error {
+    color: red;
+    list-style-type: none;
+}

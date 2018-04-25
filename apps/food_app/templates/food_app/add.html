@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">    
+    <link rel="stylesheet" href="{% static 'css/add.css' %}">
+    <title>Order New Delivery</title>
+</head>
+<body>
+    
+    <div class="container">
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="active"><a href="{% url 'add' %}">Add</a></li>
+            <li role="presentation"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li role="presentation"><a href="{% url 'reload_wallet' %}">Pricing</a></li>
+            <li role="presentation"><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+
+        <h1>Order New Delivery</h1>
+        {% if messages %}
+            <ul>{% for message in messages %}
+                    {% if message.extra_tags == "tickets" or  message.extra_tags == "delivery"  %}
+                        <li class="error">{{message}}</li>
+                    {%endif%}
+                {%endfor%}
+            </ul>
+        {%endif%}
+        
+        
+        <form action="{% url 'new_delivery' %}" method="POST">
+            {% csrf_token %}
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">Restaurant</span>
+                <select name="restaurant" class="form-control">
+                    <option value="">Choose Restaurant</option>
+                    <option value="Ike's Sandwiches">Ike's Sandwiches</option>
+                    <option value="Habit Burger">Habit Burger</option>
+                    <option value="Kopan Ramen">Kopan Ramen</option>
+                    <option value="Kabuki">Kabuki</option>
+                    <option value="Pampas Grill">Pampas Grill</option>
+                    <option value="Guildhall">GuildHall</option>
+                    <option value="Wood Ranch BBQ">Wood Ranch BBQ</option>
+                    <option value="The New Deal">The New Deal</option>
+                    <option value="Granville">Granville</option>
+                </select>
+            </div>
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">Date</span>
+                <input type="date" name="date" class="form-control">
+            </div>
+    
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">Time</span>
+                <input type="text" name="time" class="form-control" placeholder="e.g. 12 p.m.">
+            </div>
+
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">Select your address</span>
+                <select name="existing" class="form-control">
+                    <option value="">Choose Address</option>
+                    {% for the_address in addresses %}
+                    <option value="{{the_address.id}}">{{the_address.street}} {{the_address.city}}, {{the_address.state}} {{the_address.zipcode}}</option>
+                {% endfor %}
+                </select>
+            </div>
+
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">Or add a new address</span>
+                <input type="text" name="street" class="form-control" placeholder="123 Main Street">
+                <input type="text" name="city" class="form-control" placeholder="Beverly Hills">
+                <input type="text" name="state" class="form-control" placeholder="California">
+                <input type="text" name="zipcode" class="form-control" placeholder="90210">
+            </div>
+            
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">Instructions</span>
+                <textarea name="instructions" class="form-control" aria-label="With textarea" placeholder="e.g. Ring front doorbell, gate code is #4544"></textarea>
+            </div>
+
+            <input type="hidden" value="{{request.session.user_id}}" name="customer_id">
+
+            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Request delivery!">
+        </form>
+    </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>

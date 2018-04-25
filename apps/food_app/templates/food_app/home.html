@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+  <title>FoodWay™</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+{% load static %}
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/home.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="home.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  
+  <script>
+    // auto formatting phone number input into desired xxx-xxx-xxxx format
+    $(document).ready(function(){
+
+      function phoneFormat(input){
+        input = input.replace(/\D/g,'');
+        input = input.substring(0,10);
+        var size = input.length;
+        if(size == 0){
+                input = input;
+        }else if(size < 7){
+                input = input.substring(0,3)+'-'+input.substring(3,6);
+        }else{
+                input = input.substring(0,3)+'-'+input.substring(3,6)+'-'+input.substring(6,10);
+        }
+        return input; 
+      }
+
+      document.getElementById('phoneNumber').addEventListener('keyup',function(evt){
+        var phoneNumber = document.getElementById('phoneNumber');
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        phoneNumber.value = phoneFormat(phoneNumber.value);
+      });
+
+      document.getElementById('phoneNumber').value.replace(/\D/g,'');
+
+      // keep registration form hidden by default
+      var x = document.getElementById("register");
+      x.style.visibility = "hidden";
+
+    });
+  </script>
+</head>
+
+<body>
+
+  <div class="site-wrapper">
+
+    <div class="site-wrapper-inner">
+
+      <div class="cover-container">
+
+        <div class="inner cover">
+          <h1 class="cover-heading">FoodWay™</h1>
+          <p class="lead">The Only Way.</p>
+        </div>
+        <div id="logreg">
+          <div id="login">
+            <h4>Login</h4>
+            <form action="{% url 'login' %}" method="POST">
+              {% csrf_token %}
+              <div class="form-group mx-sm-3 mb-2">
+
+                <input type="email" name="email" class="inputs" placeholder="Email">
+              </div>
+              <div class="form-group mx-sm-3 mb-2">
+
+                <input type="password" name="password" class="inputs" placeholder="Password">
+              </div>
+              {% if messages %}
+              <ul>{% for message in messages %}
+                    {% if message.extra_tags == "login"  %}
+                        <li class="error">{{message}}</li>
+                    {%endif%}
+                  {%endfor%}
+              </ul>
+              {%endif%}
+              <input type="submit" class="btn btn-secondary" value="Login">
+            </form>
+            <br>
+            <p>Not registered? Sign up <a id="reg_hover" onclick="toggle_reg_show()"><u>HERE</u></a></p>
+          </div>
+          <div id="register">
+                  <h4>Register</h4>
+                  <form action="{% url 'register' %}" method="POST" id="register_form">
+                    {% csrf_token %}
+                    <input class="inputs" type="text" name="first_name" placeholder="First name">
+                    <input class="inputs" type="text" name="last_name" placeholder="Last name">
+                    <input class="inputs" type="text" name="email" placeholder="Email">
+                    <input class="inputs" type="text" name="phone" placeholder="Phone" id="phoneNumber">
+                    <input class="inputs" type="text" name="street" placeholder="Address">
+                    <input class="inputs" type="text" name="city" placeholder="City">
+                    <input class="inputs" type="text" name="state" placeholder="State">
+                    <input class="inputs" type="text" name="zipcode" placeholder="Zip Code">
+                    <input class="inputs" type="password" name="password" placeholder="Password">
+                    <input class="inputs" type="password" name="confirm_password" placeholder="Confirm Password">
+                    <input type="submit" class="btn btn-secondary" value="Register">
+                    {% if messages %}
+                    <ul>{% for message in messages %}
+                            {% if message.extra_tags == "registration"  %}
+                                <li class="error">{{message}}</li>
+                            {%endif%}
+                        {%endfor%}
+                    </ul>
+                    {%endif%}
+                  </form>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+    crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+    crossorigin="anonymous"></script>
+  <script src="../../dist/js/bootstrap.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  <script>
+    function toggle_reg_show() {
+      var x = document.getElementById("register");
+      if (x.style.visibility === "hidden") {
+          x.style.visibility = "visible";
+      } else {
+          x.style.visibility = "hidden";
+      }
+    }
+  </script>
+</body>
+
+</html>

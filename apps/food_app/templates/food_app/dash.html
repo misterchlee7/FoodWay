@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="icon" href="../../favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/dash.css' %}">
+</head>
+<body>
+    <div class="page-header">
+        <h1>FoodWay™</h1> <h4>The Only Way.</h4>
+        <button id="button"class="btn btn-info"><a href="{% url 'logout' %}">Logout</a></button>
+    </div>
+    <div class="container">
+        <div class="jumbotron">
+            <h3>Welcome, {{ user.first_name }}</h3>
+            <p>This is your dashboard. You currently have <strong>{{count}}</strong> open orders. You can review your upcoming deliveries below or schedule a delivery from a restaurant. You currently have <strong>{{meal_tix}}</strong> meal tickets available. You can purchase more tickets by choosing from our Basic or Premium options.</p>
+            <a href="{% url 'add' %}" class="btn btn-default btn-lg" role="button">Click here to schedule a new delivery!</a>
+            <a href="{% url 'new_subscription' %}" class="btn btn-default btn-lg" role="button">Load your wallet!</a>
+        </div>
+<div id="upcoming">
+        <h1>Your upcoming deliveries</h1>
+        <div class="row">
+            {% for delivery in user_deliveries %}
+            <div class="card" style="width: 20rem;">
+                <div class="card-top">
+                <h4 class="card-title">Restaurant: {{delivery.restaurant}}</h4>
+                <p class="card-text">Delivery Instructions: {{delivery.instructions}}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                <li class="list-group-item">Date: {{delivery.date}}</li>
+                <li class="list-group-item">Time: {{delivery.time}}</li>
+                <li class="list-group-item">Status: {{delivery.status}}</li>
+                <li class="list-group-item">Delivering to: {{delivery.address.street}}</li>
+                </ul>
+                <div class="card-block">
+                    <a href="{% url 'cancel_delivery' delivery_id=delivery.id %}" class="btn btn-danger" role="button">Cancel Delivery</a>
+                </div>
+                <div class="card-block">
+                    <a href="{% url 'update' delivery_id=delivery.id%}" class="btn btn-success" role="button">Update Delivery</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+</div>
+        
+        <h1>Available Restaurants</h1>
+        <div class="row">
+            {% for restaurant in restaurants %}
+            <div class="other">
+                <div class="card-top">
+                <h4 class="card-title">{{restaurant.name}}</h4>
+                <p class ="card-text">Cuisine: {{restaurant.cuisine}}</p>
+                <p class="card-text">{{restaurant.description}}</p>
+                </div>
+                <div class="other-button">
+                    <p><a href="{% url 'add' %}" class="btn btn-success" role="button">Click to Order!</a></p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+    <div class="page-footer">
+        <br>
+            <p>FoodWay™ 2018 <a href="">Contact Us</a></p>
+            <br>
+        </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>
